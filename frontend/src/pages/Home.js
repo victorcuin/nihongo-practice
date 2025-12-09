@@ -11,6 +11,14 @@ function Home(){
                 <button onClick={() => navigate('/practice-sets')}>
                     Practice Sets
                 </button>
+
+                <button onClick={() => navigate('/add-word')} style={{ marginTop: '10px'}}>
+                    Add New Word
+                </button>        
+
+                <button onClick={() => navigate('/view-words')} style={{ marginTop: '10px'}}>
+                    View All Words    
+                </button>        
             </header>
         </div>
     );

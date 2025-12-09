@@ -10,7 +10,8 @@ class Vocabulary(db.Model):
     kanji = db.Column(db.String(100), nullable=False)
     hiragana_reading = db.Column(db.String(100), nullable=False)
     english_meaning = db.Column(db.String(200), nullable=False)
-    word_type = db.Column(db.String(50))
+    word_type = db.Column(db.String(50)) # 'vocab', 'kanji', 'onomatopoeia'
+    category = db.Column(db.String(50)) # 'work', 'family', 'school', etc.
 
     def to_dict(self):
         return {
@@ -18,7 +19,8 @@ class Vocabulary(db.Model):
             'kanji': self.kanji,
             'hiragana_reading': self.hiragana_reading,
             'english_meaning': self.english_meaning,
-            'word_type': self.word_type
+            'word_type': self.word_type,
+            'category': self.category
         }
 
 class PracticeSet(db.Model):
