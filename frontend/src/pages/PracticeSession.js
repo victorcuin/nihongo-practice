@@ -10,7 +10,7 @@ function PracticeSession() {
   const [words, setWords] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
-  const [feedback, setFeedback] = useState("");
+  const [feedback, setFeedback] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Fetch words when component loads
@@ -56,9 +56,17 @@ function PracticeSession() {
       : currentWord.english_meaning;
     
     if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-      setFeedback("✓ Correct!");
+      setFeedback({
+        isCorrect: true,
+        message: "✓ Correct!"
+      });
     } else {
-      setFeedback(`✗ Wrong. Correct answer: ${correctAnswer}`);
+      setFeedback({
+        isCorrect: false,
+        message: mode === 'reading'
+          ? `✗ Wrong. Correct reading: ${currentWord.hiragana_reading} (${currentWord.english_meaning})`
+          : `✗ Wrong. Correct meaning: ${currentWord.english_meaning} (${currentWord.hiragana_reading})`
+      });
     }
   };
 
@@ -107,8 +115,12 @@ function PracticeSession() {
         
         {feedback && (
           <>
-            <div style={{ marginTop: '20px', fontSize: '24px' }}>
-              {feedback}
+            <div style={{ 
+              marginTop: '20px', 
+              fontSize: '24px',
+              color: feedback.isCorrect ? 'lightgreen' : '#ff6b6b'
+            }}>
+              {feedback.message}
             </div>
             <button onClick={handleNext} style={{ marginTop: '20px', padding: '10px 30px' }}>
               Next Word →
