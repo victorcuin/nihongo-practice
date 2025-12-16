@@ -5,6 +5,7 @@ function ModeSelection() {
   const navigate = useNavigate();
   const { setId } = useParams();
   const [wordCount, setWordCount] = useState(0);
+  const [strugglingCount, setStrugglingCount] = useState(0);
 
   useEffect(() => {
     // Fetch word count for this set
@@ -14,6 +15,14 @@ function ModeSelection() {
         setWordCount(data.length);
       })
       .catch(error => console.error('Error fetching words:', error));
+    
+    // Fetch struggling word count
+    fetch(`http://127.0.0.1:5000/api/practice-sets/${setId}/struggling-words`)
+      .then(response => response.json())
+      .then(data => {
+        setStrugglingCount(data.length);
+      })
+      .catch(error => console.error('Error fetching struggling words:', error));
   }, [setId]);
 
   return (
@@ -21,6 +30,9 @@ function ModeSelection() {
       <header className="App-header">
         <h1>Choose Practice Mode</h1>
         <p>This set has {wordCount} words</p>
+        {strugglingCount > 0 && (
+          <p style={{ color: '#ff6b6b' }}>⚠️ {strugglingCount} struggling words</p>
+        )}
         
         <div style={{ marginTop: '30px' }}>
           <button 
@@ -40,6 +52,17 @@ function ModeSelection() {
             <br />
             <small>(See kanji → Type English)</small>
           </button>
+          
+          {strugglingCount > 0 && (
+            <button 
+              onClick={() => navigate(`/practice-sets/${setId}/practice`, { state: { mode: 'reading', strugglingOnly: true } })}
+              style={{ margin: '10px', padding: '20px 40px', fontSize: '18px', backgroundColor: '#ff6b6b', border: 'none' }}
+            >
+              Practice Struggling Words
+              <br />
+              <small>({strugglingCount} words)</small>
+            </button>
+          )}
         </div>
 
         <button 

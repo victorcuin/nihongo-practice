@@ -188,6 +188,81 @@ def update_practice_set(set_id):
     db.session.commit()
     
     return jsonify({"message": f"Practice set '{data['name']}' updated successfully!"})
+
+@app.route('/api/practice/answer', methods=['POST'])
+def record_answer():
+    from flask import request
+
+    data = request.get_json()
+    word_id = data['word_id']
+    set_id = data['set_id']
+    is_correct = data['is_correct']
+
+    #Find or create progress record for this word in this set
+    progress = WordProgress.query.filter_by(word_id=word_id, set_id=set_id).first()
+
+    if not progress:
+        #Create new progess record
+        progress = WordProgress(
+            word_id=word_id,
+            set_id=set_id,
+            correct_count=0,
+            incorrect_count=0
+        )
+        db.session.add(progress)
+    #update counts
+    if is_correct:
+        progress.correct_count += 1
+    else:
+        progress.incorrect_count +=1
+        #cancel out one correct
+        if progress.correct_count > 0:
+            progress.correct_count -= 1
+    #update last practiced time
+    from datetime import datetime
+    progress.last_practiced = datetime.utcnow()
+
+    #Check if mastered (10+ net correct)
+    if progress.correct_count >= 10:
+        progress.is_mastered = True
+    else:
+        progress.is_mastered = False
+    
+    #Check if struggling (more wrong than right)
+    if progress.incorrect_count > progress.correct_count:
+        progress.is_struggling = True
+    else:
+        progress.is_struggling = False
+
+    db.session.commit()
+
+    return jsonify({
+        "message": "Progress recorded",
+        "progress": progress.to_dict()
+    })
+
+@app.route('/api/practice-sets/<int:set_id>/progress', methods=['GET'])
+def get_set_progress(set_id):
+    progress_records = WordProgress.query.filter_by(set_id=set_id).all()
+    return jsonify([p.to_dict() for p in progress_records])
+
+@app.route('/api/practice-sets/<int:set_id>/struggling-words', methods=['GET'])
+def get_struggling_words(set_id):
+    # Get words marked as struggling in this set
+    struggling_progress = WordProgress.query.filter_by(set_id=set_id, is_struggling=True).all()
+    
+    words = []
+    for progress in struggling_progress:
+        word = Vocabulary.query.get(progress.word_id)
+        word_dict = word.to_dict()
+        word_dict['correct_count'] = progress.correct_count
+        word_dict['incorrect_count'] = progress.incorrect_count
+        word_dict['is_struggling'] = progress.is_struggling
+        words.append(word_dict)
+    
+    return jsonify(words)
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 
