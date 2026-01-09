@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import './AddSet.css';
 
 function AddSet() {
   const navigate = useNavigate();
@@ -58,105 +59,104 @@ function AddSet() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header" style={{ maxHeight: '90vh', overflowY: 'scroll' }}>
-        <h1>Create New Practice Set</h1>
-        
-        <form onSubmit={handleSubmit} style={{ marginTop: '20px', width: '600px' }}>
-          <div style={{ margin: '10px' }}>
+    <div className="add-set-page">
+      <div className="add-set-container">
+        <div className="page-header">
+          <h1>Create New Practice Set</h1>
+          <p>Add a set name and vocabulary words</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="add-set-form">
+          <div className="set-name-section">
+            <label>Set Name</label>
             <input
               type="text"
-              placeholder="Set name (e.g., Work Vocabulary Ch. 1)"
+              placeholder="e.g., Work Vocabulary Ch. 1"
               value={setName}
               onChange={handleSetNameChange}
               required
-              style={{ padding: '10px', fontSize: '16px', width: '580px' }}
             />
           </div>
-          
-          <h3 style={{ marginTop: '30px' }}>Words</h3>
-          
-          {words.map((word, index) => (
-            <div key={index} style={{ 
-              border: '1px solid white', 
-              padding: '15px', 
-              margin: '10px 0',
-              borderRadius: '5px'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <span>Word {index + 1}</span>
-                {words.length > 1 && (
-                  <button 
-                    type="button"
-                    onClick={() => removeWordRow(index)}
-                    style={{ padding: '5px 10px', fontSize: '12px' }}
-                  >
-                    Remove
-                  </button>
-                )}
-              </div>
-              
-              <input
-                type="text"
-                placeholder="Kanji (勉強)"
-                value={word.kanji}
-                onChange={(e) => handleWordChange(index, 'kanji', e.target.value)}
-                style={{ padding: '8px', fontSize: '14px', width: '540px', margin: '5px 0' }}
-              />
-              
-              <input
-                type="text"
-                placeholder="Hiragana (べんきょう)"
-                value={word.hiragana_reading}
-                onChange={(e) => handleWordChange(index, 'hiragana_reading', e.target.value)}
-                style={{ padding: '8px', fontSize: '14px', width: '540px', margin: '5px 0' }}
-              />
-              
-              <input
-                type="text"
-                placeholder="English meaning (study)"
-                value={word.english_meaning}
-                onChange={(e) => handleWordChange(index, 'english_meaning', e.target.value)}
-                style={{ padding: '8px', fontSize: '14px', width: '540px', margin: '5px 0' }}
-              />
-              
-              <select
-                value={word.word_type}
-                onChange={(e) => handleWordChange(index, 'word_type', e.target.value)}
-                style={{ padding: '8px', fontSize: '14px', width: '558px', margin: '5px 0' }}
+
+          <div className="words-section">
+            <div className="words-header">
+              <h3>Words ({words.length})</h3>
+              <button 
+                type="button" 
+                onClick={addWordRow}
+                className="add-word-btn"
               >
-                <option value="vocab">Vocabulary</option>
-                <option value="kanji">Kanji</option>
-                <option value="onomatopoeia">Onomatopoeia</option>
-              </select>
+                + Add Word
+              </button>
             </div>
-          ))}
-          
-          <button 
-            type="button" 
-            onClick={addWordRow}
-            style={{ marginTop: '10px', padding: '10px 20px' }}
-          >
-            + Add Another Word
-          </button>
-          
-          <div style={{ marginTop: '30px' }}>
-            <button type="submit" style={{ padding: '15px 40px', fontSize: '16px' }}>
-              Create Set with Words
-            </button>
+
+            <div className="words-list">
+              {words.map((word, index) => (
+                <div key={index} className="word-input-card">
+                  <div className="word-card-header">
+                    <span className="word-number">#{index + 1}</span>
+                    {words.length > 1 && (
+                      <button 
+                        type="button"
+                        onClick={() => removeWordRow(index)}
+                        className="remove-btn"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="word-inputs">
+                    <input
+                      type="text"
+                      placeholder="Kanji (勉強)"
+                      value={word.kanji}
+                      onChange={(e) => handleWordChange(index, 'kanji', e.target.value)}
+                    />
+
+                    <input
+                      type="text"
+                      placeholder="Hiragana (べんきょう)"
+                      value={word.hiragana_reading}
+                      onChange={(e) => handleWordChange(index, 'hiragana_reading', e.target.value)}
+                    />
+
+                    <input
+                      type="text"
+                      placeholder="English (study)"
+                      value={word.english_meaning}
+                      onChange={(e) => handleWordChange(index, 'english_meaning', e.target.value)}
+                    />
+
+                    <select
+                      value={word.word_type}
+                      onChange={(e) => handleWordChange(index, 'word_type', e.target.value)}
+                    >
+                      <option value="vocab">Vocabulary</option>
+                      <option value="kanji">Kanji</option>
+                      <option value="onomatopoeia">Onomatopoeia</option>
+                    </select>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+
+          <button type="submit" className="submit-btn">
+            Create Set with {words.filter(w => w.kanji && w.hiragana_reading && w.english_meaning).length} Words
+          </button>
         </form>
-        
+
         {message && (
-          <div style={{ marginTop: '20px', color: message.includes('Error') ? 'red' : 'lightgreen' }}>
+          <div className={`message ${message.includes('Error') ? 'error' : 'success'}`}>
             {message}
           </div>
         )}
-        
-        <button onClick={() => navigate('/practice-sets')} style={{ marginTop: '20px' }}>
+
+        <button onClick={() => navigate('/practice-sets')} className="cancel-btn">
           Cancel
         </button>
-      </header>
+      </div>
     </div>
   );
 }

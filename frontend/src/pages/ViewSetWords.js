@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import './ViewSetWords.css';
 
 function ViewSetWords() {
   const navigate = useNavigate();
@@ -29,46 +30,39 @@ function ViewSetWords() {
 
   if (loading) {
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className="view-set-words-page">
+        <div className="loading">
           <p>Loading words...</p>
-        </header>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>{setName}</h1>
-        <p>{words.length} words in this set</p>
-        
-        <div style={{ marginTop: '20px', maxHeight: '500px', overflowY: 'scroll', width: '500px' }}>
-          {words.map((word, index) => (
-            <div 
-              key={word.id}
-              style={{ 
-                border: '1px solid white', 
-                padding: '15px', 
-                margin: '10px',
-                textAlign: 'left'
-              }}
-            >
-              <div style={{ fontSize: '12px', color: '#888' }}>#{index + 1}</div>
-              <div style={{ fontSize: '24px', marginTop: '5px' }}>{word.kanji}</div>
-              <div style={{ fontSize: '18px', marginTop: '5px' }}>{word.hiragana_reading}</div>
-              <div style={{ fontSize: '16px', marginTop: '5px' }}>{word.english_meaning}</div>
-              <div style={{ fontSize: '12px', marginTop: '10px', color: '#aaa' }}>
-                Type: {word.word_type}
-              </div>
-            </div>
-          ))}
+    <div className="view-set-words-page">
+      <div className="page-header">
+        <div>
+          <h1>{setName}</h1>
+          <p>{words.length} words in this set</p>
         </div>
-        
-        <button onClick={() => navigate(`/practice-sets/${setId}`)} style={{ marginTop: '20px' }}>
+        <button onClick={() => navigate(`/practice-sets/${setId}`)} className="back-btn-header">
           Back to Set
         </button>
-      </header>
+      </div>
+
+      <div className="words-grid">
+        {words.map((word, index) => (
+          <div key={word.id} className="word-card">
+            <div className="word-number">#{index + 1}</div>
+            <div className="word-kanji">{word.kanji}</div>
+            <div className="word-reading">{word.hiragana_reading}</div>
+            <div className="word-meaning">{word.english_meaning}</div>
+            <div className="word-type">
+              {word.word_type || 'vocab'}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
