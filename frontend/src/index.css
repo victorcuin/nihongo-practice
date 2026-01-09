@@ -1,10 +1,35 @@
+/* Import a clean, readable font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Color Variables */
+:root {
+  --bg-main: #E8E8E8;
+  --bg-card: #FFFFFF;
+  --accent-green: #6B9080;
+  --text-primary: #2D3748;
+  --text-secondary: #718096;
+  --border: #CBD5E0;
+  
+  --success: #48BB78;
+  --error: #F56565;
+  --warning: #ED8936;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
 }
 
 code {
