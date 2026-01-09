@@ -1,0 +1,147 @@
+.mode-selection-page {
+  min-height: 100vh;
+  background-color: var(--bg-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.mode-container {
+  max-width: 700px;
+  width: 100%;
+}
+
+.mode-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.mode-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.word-count {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.struggling-alert {
+  font-size: 14px;
+  color: var(--error);
+  font-weight: 600;
+  background-color: rgba(245, 101, 101, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.mode-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.primary-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.mode-btn {
+  background-color: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+}
+
+.mode-btn.primary {
+  border-color: var(--accent-green);
+}
+
+.mode-btn.primary:hover {
+  background-color: var(--accent-green);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.mode-btn.primary:hover .mode-title,
+.mode-btn.primary:hover .mode-desc {
+  color: white;
+}
+
+.mode-btn.struggling {
+  border-color: var(--error);
+}
+
+.mode-btn.struggling:hover {
+  background-color: var(--error);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.mode-btn.struggling:hover .mode-title,
+.mode-btn.struggling:hover .mode-desc {
+  color: white;
+}
+
+.mode-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.mode-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.mode-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-btn {
+  background-color: var(--accent-green);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.action-btn:hover {
+  background-color: #5a7a6b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn.secondary {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.action-btn.secondary:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  background-color: transparent;
+  box-shadow: none;
+}

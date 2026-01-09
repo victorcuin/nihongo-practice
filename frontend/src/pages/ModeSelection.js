@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import './ModeSelection.css';
 
 function ModeSelection() {
   const navigate = useNavigate();
@@ -26,63 +27,69 @@ function ModeSelection() {
   }, [setId]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Choose Practice Mode</h1>
-        <p>This set has {wordCount} words</p>
-        {strugglingCount > 0 && (
-          <p style={{ color: '#ff6b6b' }}>⚠️ {strugglingCount} struggling words</p>
-        )}
-        
-        <div style={{ marginTop: '30px' }}>
-          <button 
-            onClick={() => navigate(`/practice-sets/${setId}/practice`, { state: { mode: 'reading' } })}
-            style={{ margin: '10px', padding: '20px 40px', fontSize: '18px' }}
-          >
-            Practice by Reading
-            <br />
-            <small>(See kanji → Type hiragana)</small>
-          </button>
-          
-          <button 
-            onClick={() => navigate(`/practice-sets/${setId}/practice`, { state: { mode: 'meaning' } })}
-            style={{ margin: '10px', padding: '20px 40px', fontSize: '18px' }}
-          >
-            Practice by Meaning
-            <br />
-            <small>(See kanji → Type English)</small>
-          </button>
-          
+    <div className="mode-selection-page">
+      <div className="mode-container">
+        <div className="mode-header">
+          <h1>Choose Practice Mode</h1>
+          <p className="word-count">This set has {wordCount} words</p>
+          {strugglingCount > 0 && (
+            <p className="struggling-alert">⚠️ {strugglingCount} struggling words</p>
+          )}
+        </div>
+
+        <div className="mode-options">
+          <div className="primary-modes">
+            <button 
+              onClick={() => navigate(`/practice-sets/${setId}/practice`, { state: { mode: 'reading' } })}
+              className="mode-btn primary"
+            >
+              <div className="mode-title">Practice by Reading</div>
+              <div className="mode-desc">See kanji → Type hiragana</div>
+            </button>
+
+            <button 
+              onClick={() => navigate(`/practice-sets/${setId}/practice`, { state: { mode: 'meaning' } })}
+              className="mode-btn primary"
+            >
+              <div className="mode-title">Practice by Meaning</div>
+              <div className="mode-desc">See kanji → Type English</div>
+            </button>
+          </div>
+
           {strugglingCount > 0 && (
             <button 
               onClick={() => navigate(`/practice-sets/${setId}/practice`, { state: { mode: 'reading', strugglingOnly: true } })}
-              style={{ margin: '10px', padding: '20px 40px', fontSize: '18px', backgroundColor: '#ff6b6b', border: 'none' }}
+              className="mode-btn struggling"
             >
-              Practice Struggling Words
-              <br />
-              <small>({strugglingCount} words)</small>
+              <div className="mode-title">Practice Struggling Words</div>
+              <div className="mode-desc">{strugglingCount} words need practice</div>
             </button>
           )}
         </div>
 
-        <button 
-          onClick={() => navigate(`/practice-sets/${setId}/view-words`)} 
-          style={{ marginTop: '30px' }}
-        >
-          View All Words
-        </button>
-        
-        <button 
-          onClick={() => navigate(`/practice-sets/${setId}/edit`)} 
-          style={{ marginTop: '10px' }}
-        >
-          Edit This Set
-        </button>
-        
-        <button onClick={() => navigate('/practice-sets')} style={{ marginTop: '10px' }}>
-          Back to Sets
-        </button>
-      </header>
+        <div className="mode-actions">
+          <button 
+            onClick={() => navigate(`/practice-sets/${setId}/view-words`)} 
+            className="action-btn"
+          >
+            View All Words
+          </button>
+
+          <button 
+            onClick={() => navigate(`/practice-sets/${setId}/edit`)} 
+            className="action-btn"
+          >
+            Edit This Set
+          </button>
+
+          <button 
+            onClick={() => navigate('/practice-sets')} 
+            className="action-btn secondary"
+          >
+            Back to Sets
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

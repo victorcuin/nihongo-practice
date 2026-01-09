@@ -1,5 +1,6 @@
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import './PracticeSession.css';
 
 function PracticeSession() {
   const navigate = useNavigate();
@@ -146,37 +147,40 @@ function PracticeSession() {
   // Show completion screen
   if (currentIndex >= currentWords.length && missedWords.length === 0 && feedback?.message.includes("Perfect")) {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Practice Complete!</h1>
-          <p style={{ fontSize: '48px', marginTop: '20px' }}>🎉</p>
-          <p style={{ fontSize: '24px', marginTop: '20px' }}>
-            You mastered all {allWords.length} words!
-          </p>
-          <p style={{ marginTop: '10px' }}>Rounds needed: {round}</p>
-          
-          <button 
-            onClick={() => {
-              // Reset everything to practice again
-              setCurrentWords(allWords);
-              setMissedWords([]);
-              setCurrentIndex(0);
-              setUserAnswer("");
-              setFeedback(null);
-              setRound(1);
-            }} 
-            style={{ marginTop: '30px', padding: '15px 30px' }}
-          >
-            Practice Again
-          </button>
-          
-          <button 
-            onClick={() => navigate('/practice-sets')} 
-            style={{ marginTop: '10px', padding: '15px 30px' }}
-          >
-            Back to Sets
-          </button>
-        </header>
+      <div className="practice-session-page">
+        <div className="completion-screen">
+          <div className="completion-card">
+            <div className="completion-icon">🎉</div>
+            <h1>Practice Complete!</h1>
+            <p className="completion-message">
+              You mastered all {allWords.length} words!
+            </p>
+            <p className="rounds-info">Rounds needed: {round}</p>
+            
+            <div className="completion-actions">
+              <button 
+                onClick={() => {
+                  setCurrentWords(allWords);
+                  setMissedWords([]);
+                  setCurrentIndex(0);
+                  setUserAnswer("");
+                  setFeedback(null);
+                  setRound(1);
+                }} 
+                className="primary-btn"
+              >
+                Practice Again
+              </button>
+              
+              <button 
+                onClick={() => navigate('/practice-sets')} 
+                className="secondary-btn"
+              >
+                Back to Sets
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -205,82 +209,79 @@ function PracticeSession() {
 
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button
-          onClick={handleToggleShuffle}
-          style={{
-            position: 'absolute', 
-            top: '20px', 
-            right: '20px',
-            padding: '10px 20px',
-            backgroundColor: isShuffled ? '#4CAF50' : '#888',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer'
-          }}
-        >
-          {isShuffled ? 'Shuffled' : 'In Order'}
-        </button>
+    <div className="practice-session-page">
+      {/* Shuffle button */}
+      <button 
+        onClick={handleToggleShuffle}
+        className={`shuffle-btn ${isShuffled ? 'active' : ''}`}
+      >
+        {isShuffled ? '🔀 Shuffled' : '📋 In Order'}
+      </button>
 
-        <h1>Practice Session - Round {round}</h1>
-        <p>Set: {setId} | Mode: {mode} | Word {currentIndex + 1} of {currentWords.length}</p>
-        {missedWords.length > 0 && currentIndex === 0 && round > 1 && (
-          <p style={{ color: '#ff6b6b' }}>Practicing missed words from previous round</p>
-        )}
-        <div style={{ marginTop: '40px', fontSize: '48px' }}>
-          {currentWord.kanji}
+      <div className="practice-container">
+        {/* Progress header */}
+        <div className="practice-header">
+          <div className="progress-info">
+            <span className="round-badge">Round {round}</span>
+            <span className="word-counter">Word {currentIndex + 1} of {currentWords.length}</span>
+          </div>
+          <div className="mode-info">
+            {mode === 'reading' ? 'Practice by Reading' : 'Practice by Meaning'}
+          </div>
         </div>
 
-        <div style={{ marginTop: '10px', fontSize: '16px', color: '#aaa' }}>
-          Progress: ✓ {currentWord.correct_count || 0} | ✗ {currentWord.incorrect_count || 0}
-          {currentWord.is_mastered && <span style={{ color: '#4CAF50', marginLeft: '10px' }}>⭐ Mastered</span>}
-          {currentWord.is_struggling && <span style={{ color: '#ff6b6b', marginLeft: '10px' }}>⚠️ Struggling</span>}
-        </div>
-        
-        <div style={{ marginTop: '20px' }}>
-          <p>{mode === 'reading' ? 'Type the hiragana reading:' : 'Type the English meaning:'}</p>
-          <input 
-            type="text"
-            value={userAnswer}
-            onChange={(e) => setUserAnswer(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                if (feedback) {
-                  handleNext();
-                }else {
-                  handleSubmit();
+        {/* Main card */}
+        <div className="practice-card">
+          <div className="kanji-display">
+            {currentWord.kanji}
+          </div>
+
+          <div className="word-progress">
+            ✓ {currentWord.correct_count || 0} | ✗ {currentWord.incorrect_count || 0}
+            {currentWord.is_mastered && <span className="mastered-tag">⭐ Mastered</span>}
+            {currentWord.is_struggling && <span className="struggling-tag">⚠️ Struggling</span>}
+          </div>
+
+          <div className="input-section">
+            <label>
+              {mode === 'reading' ? 'Type the hiragana reading:' : 'Type the English meaning:'}
+            </label>
+            <input 
+              type="text"
+              value={userAnswer}
+              onChange={(e) => setUserAnswer(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  if (feedback) {
+                    handleNext();
+                  } else {
+                    handleSubmit();
+                  }
                 }
-              }
-            }}
-            style={{ padding: '10px', fontSize: '18px', width: '300px' }}
-          />
-        </div>
-        
-        <button onClick={handleSubmit} style={{ marginTop: '20px', padding: '10px 30px' }}>
-          Submit Answer
-        </button>
-        
-        {feedback && (
-          <>
-            <div style={{ 
-              marginTop: '20px', 
-              fontSize: '24px',
-              color: feedback.isCorrect ? 'lightgreen' : '#ff6b6b'
-            }}>
-              {feedback.message}
+              }}
+              placeholder={mode === 'reading' ? 'べんきょう' : 'study'}
+              autoFocus
+            />
+          </div>
+
+          <button onClick={handleSubmit} className="submit-btn">
+            Submit Answer
+          </button>
+
+          {feedback && (
+            <div className={`feedback ${feedback.isCorrect ? 'correct' : 'incorrect'}`}>
+              <div className="feedback-message">{feedback.message}</div>
+              <button onClick={handleNext} className="next-btn">
+                Next Word →
+              </button>
             </div>
-            <button onClick={handleNext} style={{ marginTop: '20px', padding: '10px 30px' }}>
-              Next Word →
-            </button>
-          </>
-        )}
-        
-        <button onClick={() => navigate('/practice-sets')} style={{ marginTop: '40px' }}>
+          )}
+        </div>
+
+        <button onClick={() => navigate('/practice-sets')} className="end-practice-btn">
           End Practice
         </button>
-      </header>
+      </div>
     </div>
   );
 }

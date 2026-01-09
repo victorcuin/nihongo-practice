@@ -69,11 +69,11 @@
 }
 
 .nav-button.mastered {
-  background-color: var(--success);
+  background-color: var(--accent-green);
 }
 
 .nav-button.mastered:hover {
-  background-color: #38a169;
+  background-color: #5a7a6b;
 }
 
 .badge {

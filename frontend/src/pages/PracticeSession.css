@@ -1,0 +1,333 @@
+.practice-session-page {
+  min-height: 100vh;
+  background-color: var(--bg-main);
+  padding: 40px;
+  position: relative;
+}
+
+/* Shuffle button - top right */
+.shuffle-btn {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  padding: 12px 20px;
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 10;
+}
+
+.shuffle-btn:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.shuffle-btn.active {
+  background-color: var(--accent-green);
+  color: white;
+  border-color: var(--accent-green);
+}
+
+/* Main container */
+.practice-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Practice header */
+.practice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.progress-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.round-badge {
+  background-color: var(--accent-green);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.word-counter {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.mode-info {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Main practice card */
+.practice-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 60px 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+}
+
+.kanji-display {
+  font-size: 80px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.word-progress {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.mastered-tag {
+  background-color: rgba(107, 144, 128, 0.1);
+  color: var(--accent-green);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.struggling-tag {
+  background-color: rgba(245, 101, 101, 0.1);
+  color: var(--error);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.input-section {
+  margin-bottom: 24px;
+}
+
+.input-section label {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.input-section input {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-main);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.input-section input:focus {
+  outline: none;
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 4px rgba(107, 144, 128, 0.1);
+}
+
+.input-section input::placeholder {
+  color: var(--text-secondary);
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: var(--accent-green);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.submit-btn:hover {
+  background-color: #5a7a6b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Feedback section */
+.feedback {
+  margin-top: 32px;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.feedback.correct {
+  background-color: rgba(72, 187, 120, 0.1);
+  border: 2px solid var(--success);
+}
+
+.feedback.incorrect {
+  background-color: rgba(245, 101, 101, 0.1);
+  border: 2px solid var(--error);
+}
+
+.feedback-message {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.feedback.correct .feedback-message {
+  color: var(--success);
+}
+
+.feedback.incorrect .feedback-message {
+  color: var(--error);
+}
+
+.next-btn {
+  background-color: var(--accent-green);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.next-btn:hover {
+  background-color: #5a7a6b;
+}
+
+.end-practice-btn {
+  width: 100%;
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.end-practice-btn:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+/* Completion screen */
+.completion-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.completion-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 60px 40px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.completion-icon {
+  font-size: 80px;
+  margin-bottom: 24px;
+}
+
+.completion-card h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.completion-message {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.rounds-info {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.completion-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.primary-btn {
+  background-color: var(--accent-green);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.primary-btn:hover {
+  background-color: #5a7a6b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.secondary-btn {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.secondary-btn:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
