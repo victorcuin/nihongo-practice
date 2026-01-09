@@ -21,6 +21,16 @@ function PracticeSession() {
 
   // Fetch words when component loads
   useEffect(() => {
+    // Check if practicing mastered words (passed via state)
+    const masteredWords = location.state?.words;
+    
+    if (masteredWords) {
+      setAllWords(masteredWords);
+      setCurrentWords(masteredWords);
+      setLoading(false);
+      return;
+    }
+    // otherwise, fetch from set as usual
     const strugglingOnly = location.state?.strugglingOnly;
     const endpoint = strugglingOnly 
       ? `http://127.0.0.1:5000/api/practice-sets/${setId}/struggling-words`

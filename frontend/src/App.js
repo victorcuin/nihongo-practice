@@ -9,6 +9,8 @@ import ViewWords from './pages/ViewWords';
 import AddSet from './pages/AddSet';
 import EditSet from './pages/EditSet';
 import ViewSetWords from './pages/ViewSetWords';
+import MasteredWords from './pages/MasteredWords';
+
 
 function App(){
   return(
@@ -23,6 +25,8 @@ function App(){
         <Route path="/add-set" element={<AddSet />} />
         <Route path="/practice-sets/:setId/edit" element={<EditSet />} />
         <Route path="/practice-sets/:setId/view-words" element={<ViewSetWords />} />
+        <Route path="/mastered-words" element={<MasteredWords />} />
+        <Route path="/mastered-practice" element={<PracticeSession />} />
       </Routes>
     </Router>
   );

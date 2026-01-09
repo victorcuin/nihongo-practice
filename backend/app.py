@@ -262,6 +262,29 @@ def get_struggling_words(set_id):
     
     return jsonify(words)
 
+@app.route('/api/mastered-words', methods=['GET'])
+def get_mastered_words():
+    #get all words marked as mastered accross all sets
+    mastered_progress = WordProgress.query.filter_by(is_mastered=True).all()
+
+    #use a set to avoid duplicates (same word might be mastered in multiple sets)
+    words_ids = set()
+    words = []
+
+    for progress in mastered_progress:
+        if progress.word_id not in words_ids:
+            words_ids.add(progress.word_id)
+            word = Vocabulary.query.get(progress.word_id)
+            word_dict = word.to_dict()
+            word_dict['correct_count'] = progress.correct_count
+            word_dict['incorrect_count'] = progress.incorrect_count
+            word_dict['is_mastered'] = True
+            words.append(word_dict)
+    return jsonify(words)
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

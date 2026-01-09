@@ -31,6 +31,7 @@ function EditSet() {
       });
   }, [setId]);
 
+
   const handleWordChange = (index, field, value) => {
     const newWords = [...words];
     newWords[index][field] = value;
@@ -89,7 +90,7 @@ function EditSet() {
 
   return (
     <div className="App">
-      <header className="App-header" style={{ maxHeight: '90vh', overflowY: 'scroll' }}>
+      <header className="App-header" style={{ minHeight: '100vh', overflowY: 'auto', paddingTop: '20px' }}>
         <h1>Edit Practice Set</h1>
         
         <div style={{ marginTop: '20px', width: '600px' }}>
