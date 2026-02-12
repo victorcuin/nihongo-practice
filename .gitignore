@@ -2,14 +2,14 @@
 backend/venv/
 backend/__pycache__/
 backend/*.pyc
-backend/instance/
+# backend/instance/  need to comment out so we can upload to github
 
 # Node
 frontend/node_modules/
 frontend/build/
 
 # Database
-*.db
+# *.db uploading db so i can use the words to study on any pc
 
 # OS
 .DS_Store
